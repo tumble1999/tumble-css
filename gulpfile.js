@@ -6,23 +6,21 @@ var gulp = require("gulp"),
   pipeline = require("readable-stream").pipeline,
   sourcemaps = require("gulp-sourcemaps"),
   release = require("gulp-github-release"),
-  fs = require("fs"),
-  verFile = "version.txt",
-  ver = 0;
+  fs = require("fs").promises;
+var
+versionFile='version.txt';
 
 sass.compiler = require("node-sass");
 
-fs.readFile(verFile, function(err, buf) {
-  if (err) console.log(err);
-  ver = parseInt(buf.toString());
-});
+async function GetVersion() {
+	var vBuff = await fs.readFile(versionFile);
+	var v = parseInt(vBuff.toString());
+	version = 'v'+v;
+	console.log("Releasing version",version)
 
-function GetVersion() {
-  var v = ver++;
-  fs.writeFile(verFile, v, err => {
-    if (err) console.log(err);
-  });
-  return v;
+	v++;
+	await fs.writeFile(versionFile,v);
+	return version;
 }
 
 function js(cb) {
@@ -39,7 +37,7 @@ function js(cb) {
 
 function css(cb) {
   return pipeline(
-    gulp.src("scss/**/*.scss"),
+    gulp.src("scss/main.scss"),
     sourcemaps.init(),
     sass({ outputStyle: "compressed" }).on("error", sass.logError),
     concat("tumble.min.css"),
@@ -49,4 +47,17 @@ function css(cb) {
   );
 }
 
-exports.build = gulp.series(css, js);
+gulp.task("release", async function() {
+  var v = await GetVersion();
+  return pipeline(
+	  gulp.src('dist/*'),
+    release({
+      owner: "tumble1999",
+      repo: "tumble-css",
+      tag: v
+	})
+	);
+});
+
+
+exports.build = gulp.series(css, js,gulp.task('release'));
