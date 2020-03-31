@@ -1,13 +1,31 @@
-const
+require('dotenv').config()
+var
 gulp = require('gulp'),
 uglify = require('gulp-uglify'),
 sass = require('gulp-sass'),
 concat = require('gulp-concat'),
 pipeline = require('readable-stream').pipeline,
-sourcemaps = require('gulp-sourcemaps');
+sourcemaps = require('gulp-sourcemaps'),
+release = require('gulp-github-release'),
+fs = require("fs"),
+verFile = 'version.txt',
+ver = 0;
 
 
 sass.compiler = require('node-sass');
+
+fs.readFile(verFile,function(err,buf){
+	if (err) console.log(err);
+	ver = parseInt(buf.toString());
+})
+
+function GetVersion() {
+	var v = ver++;
+	fs.writeFile(verFile, v, (err) => {
+		if (err) console.log(err);
+	  });
+	return v;
+}
 
 
 function js(cb) {
@@ -15,7 +33,7 @@ function js(cb) {
 		gulp.src('js/*.js'),
 		sourcemaps.init(),
 		uglify(),
-		concat('tumble.js'),
+		concat('tumble.min.js'),
 		sourcemaps.write(),
 		gulp.dest('dist'),
 		cb
@@ -34,4 +52,17 @@ return pipeline(
 )
 }
 
-exports.build = gulp.series(css,js);
+function release(cb) {
+	var v = GetVersion();
+	return pipeline(
+		gulp.src('dist/*.*'),
+		release({
+			owner: 'tumble1999',
+			repo: 'tumble-css',
+			tag: v,
+		  }),
+		cb
+	)
+}
+
+exports.build = gulp.series(css,js,release);
