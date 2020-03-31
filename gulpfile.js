@@ -51,17 +51,17 @@ function css(cb) {
   );
 }
 
-/*gulp.task("release", async function() {
+async function release() {
   var v = await GetVersion();
   return pipeline(
 	  gulp.src('dist/*'),
     release({
       owner: "tumble1999",
       repo: "tumble-css",
-      tag: v
+      manifest: require('./package.json')
 	})
 	);
-});*/
+};
 
 
 function inc(importance) {
@@ -80,9 +80,9 @@ function inc(importance) {
         .pipe(tagVersion());
 }
 
-gulp.task('patch', function() { return inc('patch'); })
-gulp.task('feature', function() { return inc('minor'); })
-gulp.task('release', function() { return inc('major'); })
+// gulp.task('patch', function() { return inc('patch'); })
+// gulp.task('feature', function() { return inc('minor'); })
+// gulp.task('release', function() { return inc('major'); })
 
 
 exports.build = gulp.series(css, js);
