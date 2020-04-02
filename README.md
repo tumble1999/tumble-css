@@ -1,10 +1,9 @@
 # tumble-css
 
 `https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/dist/tumble.min.css`
+`https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/dist/tumble.min.js`
 
-`https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/diste/tumble.min.js`
-
-```
+```html
 <header>
 	<div class="header-container">
 		<div class="sitetitle">

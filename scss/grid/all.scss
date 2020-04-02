@@ -1,0 +1,16 @@
+[class*=col] {
+	float: left;
+	min-height: 1px;
+	padding: 1px;
+	text-align: center;
+	width:100%;
+}
+
+.row {
+	&::after,
+	&::before {
+		content:"";
+		display: table;
+		clear: both;
+	}
+}

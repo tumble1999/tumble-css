@@ -1,0 +1,10 @@
+@for $b from 1 through $max-col {
+	@for $a from 1 through $max-col {
+		@if $a<=$b {
+			$width: percentage($a/$b);
+			.col-#{$a}-#{$b} {
+				width: $width;
+			}
+		}
+	}
+}

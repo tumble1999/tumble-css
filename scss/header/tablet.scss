@@ -1,0 +1,29 @@
+header {
+  padding: 0 30px;
+  position: static;
+}
+
+.header-container {
+  flex-flow: row;
+  position: static;
+}
+
+.btn-mobile {
+  display: none !important;
+}
+
+.sitenav {
+  transform: translate(0, 0);
+  display: block;
+  z-index: 0;
+  width: unset;
+
+  ul {
+    flex-flow: row;
+  }
+
+  li {
+    flex: 0;
+    padding: 16px;
+  }
+}

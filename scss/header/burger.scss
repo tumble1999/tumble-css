@@ -1,0 +1,45 @@
+.burger {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+
+    &::before,
+    &::after {
+      height: 100%;
+      width: 100%;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.5s ease-in-out;
+    }
+
+    height: 10%;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+    }
+
+    &::before {
+      transform: translateY(-300%);
+    }
+
+    &::after {
+      transform: translateY(300%);
+    }
+  }
+
+  &.open .burger {
+    background-color: transparent;
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
