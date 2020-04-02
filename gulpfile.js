@@ -7,24 +7,24 @@ var gulp = require("gulp"),
   sourcemaps = require("gulp-sourcemaps"),
   release = require("gulp-github-release"),
   fs = require("fs").promises,
-  git = require('gulp-git'),
-  bump = require('gulp-bump'),
-  filter = require('gulp-filter'),
-  tagVersion = require('gulp-tag-version');
+  git = require("gulp-git"),
+  bump = require("gulp-bump"),
+  filter = require("gulp-filter"),
+  tagVersion = require("gulp-tag-version");
 var
-versionFile='version.txt';
+versionFile = "version.txt";
 
 sass.compiler = require("node-sass");
 
 async function GetVersion() {
-	var vBuff = await fs.readFile(versionFile);
-	var v = parseInt(vBuff.toString());
-	version = 'v'+v;
-	console.log("Releasing version",version)
+  var vBuff = await fs.readFile(versionFile);
+  var v = parseInt(vBuff.toString());
+  version = "v" + v;
+  console.log("Releasing version", version);
 
-	v++;
-	await fs.writeFile(versionFile,v);
-	return version;
+  v++;
+  await fs.writeFile(versionFile, v);
+  return version;
 }
 
 function js(cb) {
@@ -51,39 +51,46 @@ function css(cb) {
   );
 }
 
-async function release(cb) {
-	var v = await GetVersion();
-	return pipeline(
-	  gulp.src('dist/*'),
-    release({
-      owner: "tumble1999",
-	  repo: "tumble-css",
-	  tag:v
-	}),
-	cb
-	);
-};
-
+async function release() {
+	
+  
+}
 
 function inc(importance) {
-    // get all the files to bump version in
-    return gulp.src(['./package.json'])
-        // bump the version number in those files
-        .pipe(bump({type: importance}))
-        // save it back to filesystem
-        .pipe(gulp.dest('./'))
-        // commit the changed version number
-        .pipe(git.commit('bumps package version'))
+  // get all the files to bump version in
+  return (
+    gulp
+      .src(["./package.json"])
+      // bump the version number in those files
+      .pipe(bump({ type: importance }))
+      // save it back to filesystem
+      .pipe(gulp.dest("./"))
+      // commit the changed version number
+      .pipe(git.commit("bumps package version"))
 
-        // read only one file to get the version number
-        .pipe(filter('package.json'))
-        // **tag it in the repository**
-        .pipe(tagVersion());
+      // read only one file to get the version number
+      .pipe(filter("package.json"))
+      // **tag it in the repository**
+      .pipe(tagVersion())
+  );
 }
 
 // gulp.task('patch', function() { return inc('patch'); })
 // gulp.task('feature', function() { return inc('minor'); })
 // gulp.task('release', function() { return inc('major'); })
 
-
 exports.build = gulp.series(css, js);
+gulp.task("release", async() =>{
+	var v = await GetVersion();
+	await new Promise((resolve,reject)=>{
+		pipeline(
+			gulp.src("dist/*"),
+			release({
+				owner: "tumble1999",
+				repo: "tumble-css",
+				tag:v
+			}),
+			resolve
+		);
+	})
+});
