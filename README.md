@@ -1,8 +1,8 @@
 # tumble-css
 
-`https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/release/tumble.min.css`
+`https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/dist/tumble.min.css`
 
-`https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/release/tumble.min.js`
+`https://cdn.jsdelivr.net/gh/tumble1999/tumble-css@master/diste/tumble.min.js`
 
 ```
 <header>
