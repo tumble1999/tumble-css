@@ -51,15 +51,16 @@ function css(cb) {
   );
 }
 
-async function release() {
-  var v = await GetVersion();
-  return pipeline(
+async function release(cb) {
+	var v = await GetVersion();
+	return pipeline(
 	  gulp.src('dist/*'),
     release({
       owner: "tumble1999",
-      repo: "tumble-css",
-      manifest: require('./package.json')
-	})
+	  repo: "tumble-css",
+	  tag:v
+	}),
+	cb
 	);
 };
 
