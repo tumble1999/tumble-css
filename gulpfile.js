@@ -51,10 +51,6 @@ function css(cb) {
   );
 }
 
-async function release() {
-	
-  
-}
 
 function inc(importance) {
   // get all the files to bump version in
