@@ -78,8 +78,10 @@ header {
     justify-content: center;
   }
   a {
-	  height:100%;
-	  display: flex;
-	  flex-flow:column;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 16px;
   }
 }
