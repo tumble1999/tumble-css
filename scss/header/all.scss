@@ -81,17 +81,5 @@ header {
 	  height:100%;
 	  display: flex;
 	  flex-flow:column;
-	  
-	  &::before,
-	  &::after {
-		  content:'';
-	  }
-	  &::before {
-		  margin-bottom: auto;
-	  }
-	  &::after {
-		  margin-top: auto;
-	  }
-
   }
 }
